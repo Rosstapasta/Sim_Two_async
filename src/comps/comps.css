@@ -1,0 +1,99 @@
+.bodybg{
+    background-color: #afd4c0;
+    width: 100%;
+    height: 100vh;
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.middlebody{
+    width: 50%;
+    height: 100vh;
+    min-height: 850px;
+    min-width: 850px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.avInput{
+    font-size: 25px;
+    width: 70%;
+    margin-bottom: 25px;
+    border: 1px solid #519872;
+}
+
+.authtext{
+    font-size: 20px;
+    margin-bottom: 3px;
+    position: relative;
+    left: -27%;
+}
+
+.abelement{
+    display: flex;
+    flex-direction: row;
+}
+
+.authButton{
+    border: none;
+    width: 130px;
+    height: 40px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#login{
+    background-color: #8aea92;
+}
+
+#register{
+    background-color: #3b5249;
+}
+
+.spacer1{
+    width: 40px;
+}
+
+.navbar{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #519872;
+    align-items: center;
+}
+
+.navelements{
+    width: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navtext{
+    color: #fff;
+    margin-left: 10px;
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+#houser{
+    font-weight: 800;
+}
+
+#logouttext{
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0px;
+}
