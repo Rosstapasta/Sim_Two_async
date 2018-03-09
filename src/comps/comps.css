@@ -9,9 +9,14 @@
     align-items: center;
 }
 
+#otherbody{
+    justify-content: unset;
+    min-height: 950px;
+}
+
 .middlebody{
     width: 50%;
-    height: 100vh;
+    height: auto;
     min-height: 850px;
     min-width: 850px;
     display: flex;
@@ -19,6 +24,15 @@
     justify-content: center;
     align-items: center;
     background-color: white;
+}
+
+#otherview{
+    background-color: #e2f3ea;
+    justify-content: unset;
+    padding-top: 100px;
+    
+    
+    
 }
 
 .avInput{
@@ -54,6 +68,7 @@
 
 #register{
     background-color: #3b5249;
+    color: white;
 }
 
 .spacer1{
@@ -96,4 +111,65 @@
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0px;
+}
+
+.filterContainer{
+    width: 90%;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    box-sizing: border-box;
+    padding-bottom: 30px;
+}
+
+.propbutton{
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    background-color: #8aea92;
+}
+
+.proptext{
+    font-weight: 700;
+}
+
+.filter{
+    width: 85px;
+    padding: 5px;
+    border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 20px;
+    border: 1px solid #519872;
+    outline: none;
+    font-size: 20px;
+}
+
+.filterB{
+    box-sizing: border-box;
+    font-size: 18px;
+    background-color: #8aea92;
+    border: none;
+    padding: 7px;
+    width: 70px;
+    cursor: pointer;
+}
+
+#resetB{
+    color: #fff;
+    margin-left: 10px;
+    background-color: #3b5249;
+}
+
+.rentText{
+    font-size: 23px;
+}
+
+.hl{
+    
+    position:relative;
+    font-size: 20px;
+    right: 280px;
 }
