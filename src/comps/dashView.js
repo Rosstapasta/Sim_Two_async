@@ -1,23 +1,68 @@
 import React, { Component } from 'react';
 import Navbar from './navbar';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class DashView extends Component{
+
+class DashView extends Component{
+    constructor(props){
+        super(props)
+
+        this.state = {
+            filter: 0,
+            properties: this.props.properties
+        }
+    }
+
+   
 
     render(){
+
+        console.log(this.props.properties)
+        
+        var propBox = this.props.properties.map( (prop, i) => {
+            return(
+            <div key={i} className="propContainer">
+
+                <div className="propImgCon"/>
+                    
+                <div className="propTitle">
+
+                    <h3>{prop.property_name}</h3>
+                    <p>{prop.property_description}</p>
+
+                </div>
+
+                <div className="propItems">
+                
+                    <p>Loan: ${prop.loan}</p>
+                    <p>Monthly Mortgage: ${prop.monthly_mort}</p>
+                    <p>Desired Rent: ${prop.desired_rent}</p>
+                    <p>Address: {prop.address}</p>
+                    <p>City: {prop.city}</p>
+                    <p>State: {prop.state}</p>
+                    <p>Zip: {prop.zip}</p>
+                
+                </div>
+
+            </div>
+            )
+        })
+
         return(
             <div id="otherbody" className="bodybg">
                 <div id="otherview" className="middlebody">
                     <Navbar/>
 
-                    <button className="propbutton">
+                    <Link to="/wiz1"><button className="propbutton">
                         <p className="proptext">Add new property</p>
-                    </button>
+                    </button></Link>
 
                     <div className="filterContainer">
 
                         <p className="rentText">List properties with "desired rent" greator than: $</p>
 
-                        <input className="filter"></input>
+                        <input className="filter" placeholder="0"></input>
 
                         <button className="filterB">Filter</button>
                         <button id="resetB" className="filterB">Reset</button>
@@ -26,8 +71,15 @@ export default class DashView extends Component{
 
                     <h1 className="hl">Home Listings</h1>
 
+                        {propBox}
+
+
+
                 </div>
             </div>
         )
     }
 }
+
+
+export default connect(state => state)(DashView)

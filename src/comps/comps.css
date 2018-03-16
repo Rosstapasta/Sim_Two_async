@@ -168,8 +168,172 @@
 }
 
 .hl{
-    
     position:relative;
     font-size: 20px;
     right: 280px;
+}
+
+.addlist{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90%;
+}
+
+.cancelbtn{
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    background-color: #fec2c2;
+    border: none;
+    height: 33px;
+}
+
+.newl{
+    font-size: 28px;
+}
+
+.step{
+    font-size: 24px;
+}
+
+.imgDiv{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.imgcontainer{
+    width:70%;
+    height:350px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #dedede;
+    border: 1px solid #519872;
+    outline: none;
+}
+
+#step3img{
+    padding-bottom: 30px;
+}
+
+
+
+
+.propContainer{
+    padding: 15px;
+    border: none;
+    height: 150px;
+    width: 95%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    display: flex;
+    background-color: #dedede;
+}
+
+.propImgCon{
+    height: 100%;
+    width: 150px;
+}
+
+.propTitle{
+    height: 100%;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 10px;
+    
+}
+
+.propItems{
+    height: 100%;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 10px;
+    padding-left: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    border-left: 1px solid #000;
+    align-items: left;
+    padding-left: 10px;
+}
+
+.property_name_input{
+    border-radius: 2px;
+    font-size: 15px;
+    width: 60%;
+    border: 1px solid #519872;
+    outline: none;
+    font-weight: 400;
+}
+
+#prop_description{
+    height: 100px;
+    resize: none;
+    margin-bottom: 45px;
+}
+
+.nextButton{
+    box-sizing: border-box;
+    padding: 10px 30px;
+    border-radius: 3px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #3b5249;
+    font-weight: 700;
+}
+
+.textStepOne{
+    position: relative;
+    right: 15%;
+}
+
+#stepOne_2{
+    right: 12%;
+}
+
+#citystateI{
+    right: 3%;
+    position: relative;
+    bottom: 12px;
+}
+
+#csi{
+    width: 160px;
+}
+#csi2{
+    width: 160px;
+    position: relative;
+    right: 20%;
+    margin-bottom: 45px;
+    bottom: 33px;
+}
+
+#csmargin{
+    margin-bottom: 1px;
+    position: relative;
+    right: 7%;
+}
+
+.addresstext{
+    position: relative;
+    right: 22%;
+}
+
+.zip{
+    position: relative;
+    right: 25%;
+    bottom: 27px;
+}
+
+#pn_wiz2{
+    width: 90%;
 }
