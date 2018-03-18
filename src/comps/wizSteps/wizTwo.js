@@ -9,15 +9,11 @@ import { updateAddress, updateCity, updateState, updateZip } from '../../ducks/r
 
 class Wiz2 extends Component{
     
-
     render(){
-
         console.log(this.props)
-
         return(
-            
-            <div id="otherbody" className="bodybg">
 
+            <div id="otherbody" className="bodybg">
                 <div id="otherview" className="middlebody">
 
                     <Navbar/>
@@ -69,8 +65,6 @@ class Wiz2 extends Component{
                         <Link to="/wiz3"><button className="nextButton">Next Step</button></Link>
 
                     </div>
-
-
                 </div>
             </div>
         )

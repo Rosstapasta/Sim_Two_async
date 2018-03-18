@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import step_active from './step_active.png';
 import step_complete from './step_completed.png';
 import step_inactive from './step_inactive.png';
+import { updateLoan, updateMort } from '../../ducks/reducer';
 
 class Wiz4 extends Component{
     
@@ -34,13 +35,13 @@ class Wiz4 extends Component{
                     </div>
 
                     <h2>Loan Amount</h2>
-                    <input/>
+                    <input value={this.props.loan} onChange={(e) => this.props.updateLoan(e.target.value)}/>
                     <h2>Monthly Mortgage</h2>
-                    <input/>
+                    <input value={this.props.monthlyMortgage} onChange={(e) => this.props.updateMort(e.target.value)}/>
 
                     <div className="imgDiv">
                         <Link to="/wiz3"><button>Previous Step</button></Link>
-                        <Link to="/wiz5"><button>Next Step</button></Link>
+                        <Link to="/wiz5"><button >Next Step</button></Link>
                     </div>
 
                 </div>
@@ -49,4 +50,12 @@ class Wiz4 extends Component{
     }
 }
 
-export default connect(state => state)(Wiz4)
+function mapStateToProps(state){
+    const {loan, monthlyMortgage} = state;
+    return{
+        loan,
+        monthlyMortgage
+    }
+}
+
+export default connect(mapStateToProps, { updateLoan, updateMort })(Wiz4)

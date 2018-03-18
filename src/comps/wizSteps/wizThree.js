@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import step_active from './step_active.png';
 import step_complete from './step_completed.png';
 import step_inactive from './step_inactive.png';
+import { updateImg } from '../../ducks/reducer';
 
 class Wiz3 extends Component{
     
@@ -36,7 +37,7 @@ class Wiz3 extends Component{
                     <div className="imgcontainer"></div>
 
                     <h2>Image URL</h2>
-                    <input/>
+                    <input value={this.props.imgurl} onChange={(e) => this.props.updateImg(e.target.value)}/>
 
                     <div className="imgDiv">
                     <Link to="/wiz2"><button>Previous Step</button></Link>
@@ -49,4 +50,11 @@ class Wiz3 extends Component{
     }
 }
 
-export default connect(state => state)(Wiz3)
+function mapStateToProps(state){
+    const { imgurl } = state;
+    return {
+        imgurl
+    }
+}
+
+export default connect(mapStateToProps, { updateImg})(Wiz3)

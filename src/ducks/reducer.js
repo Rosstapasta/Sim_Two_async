@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 const initialState = {
     
     username: '',
@@ -10,15 +9,15 @@ const initialState = {
     address: '',
     city: '',
     stateUSA: '',
-    zip: 0,
+    zip: null,
     imgurl: '',
-    loan: 0,
-    monthlyMortgage: 0,
-    desiredRent: 0
+    loan: null,
+    monthlyMortgage: null,
+    recommendRent: 0,
+    desiredRent: null
 }
 
 const LOGIN = "LOGIN";
-
 // const REGISTER = 'REGISTER';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DES = 'UPDATE_DES';
@@ -29,16 +28,23 @@ const UPDATE_ZIP = 'UPDATE_ZIP';
 const UPDATE_IMGURL = 'UPDATE_IMGURL';
 const UPDATE_LOAN = 'UPDATE_LOAN';
 const UPDATE_MONTHLYMORT = 'UPDATE_MONTHLYMORT';
+const UPDATE_RECOMMEND = 'UPDATE_RECOMMEND';
 const UPDATE_DESIRED_RENT = 'UPDATE_DESIRED_RENT';
-
+const SEND_NEWPROP = 'SEND_NEWPROP';
+const DELETE_PROP = 'DELETE_PROP';
 
 export default function reducer( state = initialState , action ) {
-
         let { payload } = action;
 
     switch( action.type ){
         case LOGIN + '_FULFILLED':
             return Object.assign({}, state, {username: payload[0].username, properties: payload});
+
+        case SEND_NEWPROP + '_FULFILLED':
+            return Object.assign({}, state, {properties: payload});
+
+        case DELETE_PROP + '_FULFILLED':
+            return Object.assign({}, state, {properties: payload});
         
         case UPDATE_NAME:
             return Object.assign({}, state, {propertyName: payload} )
@@ -67,12 +73,14 @@ export default function reducer( state = initialState , action ) {
         case UPDATE_MONTHLYMORT:
             return Object.assign({}, state, {monthlyMortgage: payload})
 
+        case UPDATE_RECOMMEND:
+            return Object.assign({}, state, {recommendRent: payload})
+
         case UPDATE_DESIRED_RENT:
             return Object.assign({}, state, {desiredRent: payload})
 
             default: return state;
     }
-    
 }
 
 export function login( obj, history){
@@ -81,19 +89,36 @@ export function login( obj, history){
         payload: axios.post( 'http://localhost:3030/api/login', obj ).then(res => { 
             history.push('/dashview'); 
             return res.data;
-            
         })
-        
+    }
+}
+
+export function sendNewProp(prop, history){
+     return {
+         type: SEND_NEWPROP,
+         payload: axios.post('http://localhost:3030/api/create', prop ).then(res => {
+             history.push('/dashview');
+             return res.data;
+         })
+     }                                   
+}
+
+export function deleteProp(prop){
+    return{
+        type: DELETE_PROP,
+        payload: axios.delete('http://localhost:3030/api/delete', prop).then(res => {
+
+            return res.data;
+        })
+
     }
 }
 
 export function updateName( propname ){
-    
     return {
         type: UPDATE_NAME,
         payload: propname
     }
-
 }
 
 export function updateDes(des){
@@ -153,11 +178,16 @@ export function updateMort(morty){
     }
 }
 
+export function updateRrent(recommend){
+    return{
+        type: UPDATE_RECOMMEND,
+        payload: recommend
+    }
+}
+
 export function updateDrent(rent){
     return{
         type: UPDATE_DESIRED_RENT,
         payload: rent
     }
 }
-
-

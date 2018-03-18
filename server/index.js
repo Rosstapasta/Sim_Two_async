@@ -26,7 +26,7 @@ app.use( session({
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 100000000000},
+    cookie: { maxAge: 1000000},
     
   }));
   
@@ -51,6 +51,21 @@ app.post('/api/login', (req, res, next) => {
         })    
     }
 );
+
+app.post('/api/create', (req, res, next) => {
+
+    const { username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage } = req.body;
+
+    app.get('db').new_property(username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, monthlyMortgage, recommendRent, desiredRent).then( 
+        houser => {
+            res.status(200).send(houser)
+        }
+    )
+});
+
+app.delete('/api/delete', (req, res, next) => {
+    
+})
 
 
 app.listen(SERVER_PORT, () => console.log(`listening on port: ${SERVER_PORT}`) )

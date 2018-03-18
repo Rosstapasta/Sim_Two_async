@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './navbar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import deleteIcon from './delete_icon.png';
 
 
 class DashView extends Component{
@@ -18,13 +19,16 @@ class DashView extends Component{
 
     render(){
 
-        console.log(this.props.properties)
-        
+       console.log(this.props);
         var propBox = this.props.properties.map( (prop, i) => {
             return(
             <div key={i} className="propContainer">
+            
+                <img className="deleteicon" src={deleteIcon} alt="deleteIcon"/>
 
-                <div className="propImgCon"/>
+                <div className="propImgCon">
+                
+                </div>
                     
                 <div className="propTitle">
 
@@ -35,12 +39,14 @@ class DashView extends Component{
 
                 <div className="propItems">
                 
+                
                     <p>Loan: ${prop.loan}</p>
                     <p>Monthly Mortgage: ${prop.monthly_mort}</p>
+                    <p>Recommended Rent ${prop.recommend_rent}</p>
                     <p>Desired Rent: ${prop.desired_rent}</p>
                     <p>Address: {prop.address}</p>
                     <p>City: {prop.city}</p>
-                    <p>State: {prop.state}</p>
+                    <p>State: {prop.stateusa}</p>
                     <p>Zip: {prop.zip}</p>
                 
                 </div>
