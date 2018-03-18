@@ -3,6 +3,7 @@ import axios from 'axios';
 const initialState = {
     
     username: '',
+    pw: '',
     properties: [],
     propertyName: '',
     propertyDescription: '',
@@ -18,6 +19,8 @@ const initialState = {
 }
 
 const LOGIN = "LOGIN";
+const UPDATE_USERNAME = "UPDATE_USERNAME";
+const UPDATE_PASSWORD =  "UPDATE_PASSWORD";
 // const REGISTER = 'REGISTER';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DES = 'UPDATE_DES';
@@ -45,6 +48,12 @@ export default function reducer( state = initialState , action ) {
 
         case DELETE_PROP + '_FULFILLED':
             return Object.assign({}, state, {properties: payload});
+
+        case UPDATE_USERNAME:
+            return Object.assign({}, state, {username: payload})
+
+        case UPDATE_PASSWORD:
+            return Object.assign({}, state, {pw: payload})
         
         case UPDATE_NAME:
             return Object.assign({}, state, {propertyName: payload} )
@@ -103,14 +112,28 @@ export function sendNewProp(prop, history){
      }                                   
 }
 
-export function deleteProp(prop){
+export function deleteProp(prop, prop6, prop3){
+        console.log(prop, prop6, prop3, "hit function in redux")
     return{
         type: DELETE_PROP,
-        payload: axios.delete('http://localhost:3030/api/delete', prop).then(res => {
-
+        payload: axios.delete(`http://localhost:3030/api/delete?id=${prop}&username=${prop6}&pw=${prop3}`).then(res => {
+        
             return res.data;
         })
 
+    }
+}
+
+export function updateUserName( username ){
+    return {
+        type: UPDATE_USERNAME,
+        payload: username
+    }
+}
+export function updatePassword( pw ){
+    return {
+        type: UPDATE_PASSWORD,
+        payload: pw
     }
 }
 

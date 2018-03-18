@@ -64,6 +64,20 @@ app.post('/api/create', (req, res, next) => {
 });
 
 app.delete('/api/delete', (req, res, next) => {
+    const {id, username, pw} = req.query;
+
+    app.get('db').delete_prop(id, username, pw).then(
+
+        houser_user => {
+
+            if(houser_user){
+                // session.user.username = houser_user[0].username;
+                res.status(200).send(houser_user); 
+            }else{
+                res.status(500);
+            }  
+        }
+    )
     
 })
 
