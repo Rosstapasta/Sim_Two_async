@@ -49,12 +49,14 @@ class Wiz5 extends Component{
 
                     <h3>Recommended Rent ${rRent}</h3>
 
-                    <h2>Desired Rent</h2>
-                    <input value={this.props.desiredRent} onChange={(e) => this.props.updateDrent(e.target.value)}/>
+                    <h2 id="loann" className="addresstext">Desired Rent</h2>
+                    <input className="property_name_input" value={this.props.desiredRent} onChange={(e) => this.props.updateDrent(e.target.value)}/>
                     
-                    <div className="imgDiv">
-                        <Link to="/wiz4"><button>Previous Step</button></Link>
-                        <button onClick={() => this.sendProperty()}>Complete</button>
+                    <div className="placehold2"></div>
+
+                    <div id="inputw3" className="imgDiv">
+                        <Link to="/wiz4"><button className="nextButton">Previous Step</button></Link>
+                        <button id="completebutton" className="nextButton" onClick={() => this.sendProperty()}>Complete</button>
                     </div>
 
                 </div>

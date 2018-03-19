@@ -346,10 +346,24 @@
     bottom: 14%;
 }
 
-.inputw3{
-    width: 100%;
+#inputw3{
+    width: 90%;
 }
 
 .placehold2{
     height: 40px;
+    width: 5px;
+}
+
+#loann{
+    right: 20%;
+}
+
+#monthlymm{
+    right: 17%;
+}
+
+#completebutton{
+    background-color: #8aea92;
+    color: rgb(19, 16, 16);
 }

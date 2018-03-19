@@ -6,6 +6,7 @@ import step_active from './step_active.png';
 import step_complete from './step_completed.png';
 import step_inactive from './step_inactive.png';
 import { updateImg } from '../../ducks/reducer';
+import '../comps.css';
 
 class Wiz3 extends Component{
     
@@ -36,7 +37,7 @@ class Wiz3 extends Component{
 
                     <div className="imgcontainer"></div>
 
-                    <h2>Image URL</h2>
+                    <h2 className="addresstext">Image URL</h2>
                     <input className="property_name_input" value={this.props.imgurl} onChange={(e) => this.props.updateImg(e.target.value)}/>
 
                     <div className="placehold2"></div>

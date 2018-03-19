@@ -34,14 +34,16 @@ class Wiz4 extends Component{
 
                     </div>
 
-                    <h2>Loan Amount</h2>
-                    <input value={this.props.loan} onChange={(e) => this.props.updateLoan(e.target.value)}/>
-                    <h2>Monthly Mortgage</h2>
-                    <input value={this.props.monthlyMortgage} onChange={(e) => this.props.updateMort(e.target.value)}/>
+                    <h2 id="loann" className="addresstext">Loan Amount</h2>
+                    <input className="property_name_input" value={this.props.loan} onChange={(e) => this.props.updateLoan(e.target.value)}/>
+                    <h2 id="monthlymm" className="addresstext">Monthly Mortgage</h2>
+                    <input className="property_name_input" value={this.props.monthlyMortgage} onChange={(e) => this.props.updateMort(e.target.value)}/>
 
-                    <div className="imgDiv">
-                        <Link to="/wiz3"><button>Previous Step</button></Link>
-                        <Link to="/wiz5"><button >Next Step</button></Link>
+                    <div className="placehold2"></div>
+
+                    <div id="inputw3" className="imgDiv">
+                        <Link to="/wiz3"><button className="nextButton">Previous Step</button></Link>
+                        <Link to="/wiz5"><button className="nextButton">Next Step</button></Link>
                     </div>
 
                 </div>
