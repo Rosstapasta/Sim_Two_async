@@ -11,11 +11,15 @@ class DashView extends Component{
         super(props)
 
         this.state = {
-
+            filterinput: '',
             filter: 0,
             properties: this.props.properties
 
         }
+
+        this.filterInput = this.filterInput.bind(this);
+        this.setFilter = this.setFilter.bind(this);
+        this.resetFilter = this.resetFilter.bind(this);
     }
 
 
@@ -23,20 +27,34 @@ class DashView extends Component{
         const { username, pw } = this.props;
         this.props.getProps(username, pw);
     }
-   
 
+    filterInput(val){
+        this.setState({filterinput: val});
+    }
+
+    setFilter(){
+        this.setState({ filter: parseInt(this.state.filterinput, 10) });
+        console.log(this.state.filter);
+    }
+
+    resetFilter(){
+        this.setState({ filter: 0 });
+        this.setState({ filterinput: ''});
+    }
+   
     render(){
 
-       console.log(this.props, "dashview");
+       var filteredProps = this.props.properties.filter( prop => prop.desired_rent > this.state.filter );
+        console.log(filteredProps);
     
-        var propBox = this.props.properties.map( (prop, i) => {
+        var propBox = filteredProps.map( (prop, i) => {
             return(
             <div key={i} className="propContainer">
             
                 <img className="deleteicon" src={deleteIcon} alt="deleteIcon" onClick={()=> this.props.deleteProp(prop.id, this.props.username, this.props.pw)}/>
 
                 <div className="propImgCon">
-                
+                    <img className="imageDisplay" src={`${prop.imgurl}`} alt="loading"/>
                 </div>
                     
                 <div className="propTitle">
@@ -77,10 +95,10 @@ class DashView extends Component{
 
                         <p className="rentText">List properties with "desired rent" greator than: $</p>
 
-                        <input className="filter" placeholder="0"></input>
+                        <input className="filter" placeholder="0" value={this.state.filterinput} onChange={(e) => this.filterInput(e.target.value)}></input>
 
-                        <button className="filterB">Filter</button>
-                        <button id="resetB" className="filterB">Reset</button>
+                        <button className="filterB" onClick={ () => this.setFilter() }>Filter</button>
+                        <button id="resetB" className="filterB" onClick={() => this.resetFilter()}>Reset</button>
 
                     </div>
 
@@ -95,6 +113,5 @@ class DashView extends Component{
         )
     }
 }
-
 
 export default connect(state => state, { deleteProp, getProps })(DashView)

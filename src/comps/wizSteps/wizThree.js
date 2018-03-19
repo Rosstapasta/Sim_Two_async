@@ -35,7 +35,11 @@ class Wiz3 extends Component{
 
                     </div>
 
-                    <div className="imgcontainer"></div>
+                    <div className="imgcontainer">
+
+                        <img src={`${this.props.imgurl}`} alt="preview"/>
+                        
+                    </div>
 
                     <h2 className="addresstext">Image URL</h2>
                     <input className="property_name_input" value={this.props.imgurl} onChange={(e) => this.props.updateImg(e.target.value)}/>

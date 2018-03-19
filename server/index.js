@@ -1,4 +1,3 @@
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -47,11 +46,12 @@ app.post('/api/login', (req, res, next) =>
             
            
             if(houser_user[0]){
-                // var newData = [houser_user || [], username, pw];
-                // session.user.username = houser_user[0].username;
+
                 res.status(200).send(houser_user); 
+                session.user.username = username;
+                console.log(session, "session from server")
             }else{
-                // var newData2 = [[], username, pw];
+               
                res.status(500)
             }  
         })    
@@ -76,6 +76,7 @@ app.get('/api/getproperties', (req, res, next) => {
             houser => {
                 
                 res.status(200).send(houser);
+                session.user.properties = houser;
             }
         )
     }

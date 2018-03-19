@@ -30,9 +30,6 @@
     background-color: #e2f3ea;
     justify-content: unset;
     padding-top: 100px;
-    
-    
-    
 }
 
 .avInput{
@@ -223,9 +220,6 @@
     padding-bottom: 30px;
 }
 
-
-
-
 .propContainer{
     padding: 15px;
     border: none;
@@ -243,13 +237,15 @@
     width: 150px;
 }
 
+.imageDisplay{
+    height: 100%;
+}
+
 .propTitle{
-    
     height: 100%;
     box-sizing: border-box;
     width: 490px;
     padding: 10px;
-    
 }
 
 .propItems{
@@ -310,6 +306,7 @@
 #csi{
     width: 160px;
 }
+
 #csi2{
     width: 160px;
     position: relative;

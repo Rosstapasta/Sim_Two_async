@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const initialState = {
-
     username: '',
     pw: '',
     properties: [],
@@ -16,7 +15,6 @@ const initialState = {
     monthlyMortgage: null,
     recommendRent: 0,
     desiredRent: null
-
 }
 
 const LOGIN = "LOGIN";
@@ -134,11 +132,9 @@ export function sendNewProp(prop, history){
     }                                   
 }
 
-
 export function deleteProp( prop, prop2, prop3){
     console.log(prop, "from redux deleteprop")
     return{
-        
         type: DELETE_PROP,
         payload: axios.delete(`http://localhost:3030/api/delete?id=${prop}&username=${prop2}&pw=${prop3}`).then(res => {
            
@@ -157,7 +153,6 @@ export function register(obj, history){
         })
     }
 }
-
 
 export function updateUserName( username ){
     return {
@@ -228,7 +223,6 @@ export function updateLoan(loan){
         payload: loan
     }
 }
-
 
 export function updateMort(morty){
     return{
