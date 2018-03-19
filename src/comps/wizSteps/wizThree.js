@@ -37,11 +37,14 @@ class Wiz3 extends Component{
                     <div className="imgcontainer"></div>
 
                     <h2>Image URL</h2>
-                    <input value={this.props.imgurl} onChange={(e) => this.props.updateImg(e.target.value)}/>
+                    <input className="property_name_input" value={this.props.imgurl} onChange={(e) => this.props.updateImg(e.target.value)}/>
 
-                    <div className="imgDiv">
-                    <Link to="/wiz2"><button>Previous Step</button></Link>
-                        <Link to="/wiz4"><button>Next Step</button></Link>
+                    <div className="placehold2"></div>
+
+                    <div id="inputw3" className="imgDiv">
+
+                    <Link to="/wiz2"><button className="nextButton">Previous Step</button></Link>
+                        <Link to="/wiz4"><button className="nextButton">Next Step</button></Link>
                     </div>
 
                 </div>

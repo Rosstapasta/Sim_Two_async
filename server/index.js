@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -34,23 +35,54 @@ app.use( session({
 app.use( checkSession );
 
 
-app.post('/api/login', (req, res, next) => {
-    const {session} = req;
-    const {username, pw } = req.body;
+app.post('/api/login', (req, res, next) => 
 
-    app.get('db').get_user_props(username, pw).then( 
+    {
+        const {session} = req;
+        const {username, pw } = req.body;
+
+        app.get('db').login_user(username, pw).then( 
         
         houser_user => {
-
-            if(houser_user){
-                session.user.username = houser_user[0].username;
+            
+           
+            if(houser_user[0]){
+                // var newData = [houser_user || [], username, pw];
+                // session.user.username = houser_user[0].username;
                 res.status(200).send(houser_user); 
             }else{
-                res.status(500);
+                // var newData2 = [[], username, pw];
+               res.status(500)
             }  
         })    
     }
 );
+
+app.post('/api/register', (req, res, next) => {
+
+    const {username, pw} = req.body;
+
+    app.get('db').register_user(username, pw).then(
+        houser_user => {
+            res.status(200).send(houser_user);
+        }
+    )
+})
+
+app.get('/api/getproperties', (req, res, next) => {
+        const {username, pw} = req.query;
+
+        app.get('db').get_user_props(username, pw).then(
+            houser => {
+                
+                res.status(200).send(houser);
+            }
+        )
+    }
+)
+
+
+
 
 app.post('/api/create', (req, res, next) => {
 
@@ -63,10 +95,11 @@ app.post('/api/create', (req, res, next) => {
     )
 });
 
+
 app.delete('/api/delete', (req, res, next) => {
     const {id, username, pw} = req.query;
 
-    app.get('db').delete_prop(id, username, pw).then(
+    app.get('db').delete_prop( id, username, pw ).then(
 
         houser_user => {
 

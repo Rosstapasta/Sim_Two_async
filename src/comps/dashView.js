@@ -3,7 +3,7 @@ import Navbar from './navbar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import deleteIcon from './delete_icon.png';
-import { deleteProp } from '../ducks/reducer';
+import { deleteProp, getProps } from '../ducks/reducer';
 
 
 class DashView extends Component{
@@ -11,22 +11,29 @@ class DashView extends Component{
         super(props)
 
         this.state = {
+
             filter: 0,
             properties: this.props.properties
+
         }
     }
 
+
+    componentWillMount(){
+        const { username, pw } = this.props;
+        this.props.getProps(username, pw);
+    }
    
 
     render(){
 
-       console.log(this.props);
-    //    const {history} = this.props;
+       console.log(this.props, "dashview");
+    
         var propBox = this.props.properties.map( (prop, i) => {
             return(
             <div key={i} className="propContainer">
             
-                <img className="deleteicon" src={deleteIcon} alt="deleteIcon" onClick={()=> this.props.deleteProp(prop.id, prop.username, this.props.pw)}/>
+                <img className="deleteicon" src={deleteIcon} alt="deleteIcon" onClick={()=> this.props.deleteProp(prop.id, this.props.username, this.props.pw)}/>
 
                 <div className="propImgCon">
                 
@@ -90,4 +97,4 @@ class DashView extends Component{
 }
 
 
-export default connect(state => state, { deleteProp })(DashView)
+export default connect(state => state, { deleteProp, getProps })(DashView)

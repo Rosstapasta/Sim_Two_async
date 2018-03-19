@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const initialState = {
-    
+
     username: '',
     pw: '',
     properties: [],
@@ -16,12 +16,14 @@ const initialState = {
     monthlyMortgage: null,
     recommendRent: 0,
     desiredRent: null
+
 }
 
 const LOGIN = "LOGIN";
 const UPDATE_USERNAME = "UPDATE_USERNAME";
 const UPDATE_PASSWORD =  "UPDATE_PASSWORD";
-// const REGISTER = 'REGISTER';
+const REGISTER = 'REGISTER';
+const GET_PROPS = 'GET_PROPS';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DES = 'UPDATE_DES';
 const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
@@ -38,10 +40,16 @@ const DELETE_PROP = 'DELETE_PROP';
 
 export default function reducer( state = initialState , action ) {
         let { payload } = action;
-
+   
     switch( action.type ){
         case LOGIN + '_FULFILLED':
-            return Object.assign({}, state, {username: payload[0].username, properties: payload});
+            return Object.assign({}, state );
+
+        case REGISTER + '_FULFILLED':
+            return Object.assign({}, state );
+
+        case GET_PROPS + '_FULFILLED':
+            return Object.assign({}, state, {properties: payload});
 
         case SEND_NEWPROP + '_FULFILLED':
             return Object.assign({}, state, {properties: payload});
@@ -92,7 +100,7 @@ export default function reducer( state = initialState , action ) {
     }
 }
 
-export function login( obj, history){
+export function login( obj, history ){
     return {
         type: LOGIN,
         payload: axios.post( 'http://localhost:3030/api/login', obj ).then(res => { 
@@ -102,27 +110,54 @@ export function login( obj, history){
     }
 }
 
+export function getProps(username, pw){
+   
+    return {
+        type: GET_PROPS,
+        payload: axios.get( `http://localhost:3030/api/getproperties?username=${username}&pw=${pw}`).then( res => {
+            return res.data;
+        })
+    }
+}
+
 export function sendNewProp(prop, history){
      return {
          type: SEND_NEWPROP,
          payload: axios.post('http://localhost:3030/api/create', prop ).then(res => {
-             history.push('/dashview');
+             if(res.data[0]){
+             history.push('/dashview')
+             }else{
+             history.push('/')
+             }
              return res.data;
-         })
-     }                                   
+        })
+    }                                   
 }
 
-export function deleteProp(prop, prop6, prop3){
-        console.log(prop, prop6, prop3, "hit function in redux")
+
+export function deleteProp( prop, prop2, prop3){
+    console.log(prop, "from redux deleteprop")
     return{
-        type: DELETE_PROP,
-        payload: axios.delete(`http://localhost:3030/api/delete?id=${prop}&username=${prop6}&pw=${prop3}`).then(res => {
         
+        type: DELETE_PROP,
+        payload: axios.delete(`http://localhost:3030/api/delete?id=${prop}&username=${prop2}&pw=${prop3}`).then(res => {
+           
             return res.data;
         })
 
     }
 }
+
+export function register(obj, history){
+    return{
+        type: REGISTER,
+        payload: axios.post('http://localhost:3030/api/register', obj ).then( res => {
+            history.push('/dashview')
+            return res.data
+        })
+    }
+}
+
 
 export function updateUserName( username ){
     return {
@@ -130,6 +165,7 @@ export function updateUserName( username ){
         payload: username
     }
 }
+
 export function updatePassword( pw ){
     return {
         type: UPDATE_PASSWORD,

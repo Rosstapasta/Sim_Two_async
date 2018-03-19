@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './comps.css';
 import houselogo from './auth_logo.png';
 import { connect } from 'react-redux';
-import { login, updateUserName, updatePassword } from '../ducks/reducer';
+import { login, register, updateUserName, updatePassword } from '../ducks/reducer';
 
 class AuthView extends Component{
     constructor(){
@@ -21,20 +21,21 @@ class AuthView extends Component{
     login(){
        const {history} = this.props;
        const { username, pw } = this.state;
-       this.props.login({username, pw}, history)
+       this.props.login({username, pw}, history);
+       
        
     }
 
+    register(){
+        const {history} = this.props;
+        const { username, pw } = this.state;
+        this.props.register({username, pw}, history);
+    }
 
     handleChange(prop, val){
         this.setState({[prop]: val})
+        this.props.updateUserName(val)
     }
-
-    // changeUsername(val){
-    //     this.setState({username: val});
-    //     this.props.updateUserName(val)
-
-    // }
 
     changePassword(val){
         this.setState({pw: val})
@@ -42,7 +43,6 @@ class AuthView extends Component{
     }
 
     render(){
-      
         return(
             <div className="bodybg">
                 <div className="middlebody">
@@ -58,15 +58,14 @@ class AuthView extends Component{
 
                         <button id="login" className="authButton" onClick={() => this.login()}>Login</button>
                             <div className="spacer1"></div>
-                        <button id="register" className="authButton">Register</button>
+                        <button id="register" className="authButton" onClick={() => this.register()}>Register</button>
 
                     </div>
 
                 </div>
             </div>
-
         )
     }
 }
 
-export default connect(state => state, { login, updateUserName, updatePassword })(AuthView)
+export default connect(state => state, { login, register, updateUserName, updatePassword })(AuthView)
