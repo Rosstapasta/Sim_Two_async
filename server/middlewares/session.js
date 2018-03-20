@@ -4,10 +4,11 @@ module.exports = function(req, res, next){
     if(!session.user ){
         session.user = {
             username: '',
+            pw: '',
             properties: []
-            
+
         }
     }
-    console.log(session, "check session")
+    console.log(session.id, "session middleware")
     next();
 };

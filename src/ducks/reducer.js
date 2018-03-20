@@ -21,6 +21,8 @@ const LOGIN = "LOGIN";
 const UPDATE_USERNAME = "UPDATE_USERNAME";
 const UPDATE_PASSWORD =  "UPDATE_PASSWORD";
 const REGISTER = 'REGISTER';
+
+const GETUSER = 'GETUSER';
 const GET_PROPS = 'GET_PROPS';
 const UPDATE_NAME = 'UPDATE_NAME';
 const UPDATE_DES = 'UPDATE_DES';
@@ -38,13 +40,16 @@ const DELETE_PROP = 'DELETE_PROP';
 
 export default function reducer( state = initialState , action ) {
         let { payload } = action;
-   
+        // console.log(payload, "in redux")
     switch( action.type ){
         case LOGIN + '_FULFILLED':
             return Object.assign({}, state );
 
         case REGISTER + '_FULFILLED':
             return Object.assign({}, state );
+
+        case GETUSER + '_FULFILLED':
+            return Object.assign({}, state, { username: payload.username, pw: payload.pw } )
 
         case GET_PROPS + '_FULFILLED':
             return Object.assign({}, state, {properties: payload});
@@ -99,17 +104,28 @@ export default function reducer( state = initialState , action ) {
 }
 
 export function login( obj, history ){
+    console.log(obj, "obj from login")
     return {
         type: LOGIN,
         payload: axios.post( 'http://localhost:3030/api/login', obj ).then(res => { 
             history.push('/dashview'); 
+            console.log(res.data, "redux login")
+            return res.data;
+        })
+    }
+}
+
+export function getUser(){
+    return {
+        type: GETUSER,
+        payload: axios.get('http://localhost:3030/api/getuser').then(res => {
+           
             return res.data;
         })
     }
 }
 
 export function getProps(username, pw){
-   
     return {
         type: GET_PROPS,
         payload: axios.get( `http://localhost:3030/api/getproperties?username=${username}&pw=${pw}`).then( res => {

@@ -3,87 +3,112 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const massive = require('massive');
 const cors = require('cors');
+const checkForSession = require('./middlewares/session');
 require('dotenv').config();
-
-const checkSession = require('./middlewares/session');
 
 const app = express();
 
 const {
     CONNECTION_STRING,
     SERVER_PORT,
-    SESSION_SECRET
+    SESSION_SECRET,
 } = process.env;
+
+app.use( bodyParser.json() );
+app.use( cors() );
+
+app.use( session({ 
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }));
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
 });
 
-app.use( bodyParser.json() );
-app.use( cors() );
-
-app.use( session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 1000000},
-    
-  }));
-  
-
-app.use( checkSession );
-
-
 app.post('/api/login', (req, res, next) => 
-
     {
         const {session} = req;
-        const {username, pw } = req.body;
+        const {username, pw} = req.body;
+
+        session.user = {
+            username: '',
+            pw: '',
+            properties: []
+
+        }
 
         app.get('db').login_user(username, pw).then( 
-        
-        houser_user => {
             
-           
-            if(houser_user[0]){
+            houser_user => {
+                    console.log(houser_user);
+                if(houser_user[0]){
 
-                res.status(200).send(houser_user); 
-                session.user.username = username;
-                console.log(session, "session from server")
-            }else{
-               
-               res.status(500)
-            }  
+                    session.user.username = username;
+                    session.user.pw = pw;
+                    session.user.properties = [];
+                    
+                    res.status(200).send(session.user)
+                    console.log(session.user, "login endpoint");
+
+                }else{
+
+                res.status(500)
+            }
         })    
     }
 );
 
-app.post('/api/register', (req, res, next) => {
+app.post('/api/register',  (req, res, next) => {
 
+    const {session} = req;
     const {username, pw} = req.body;
+
+    session.user.username = username;
+    session.user.pw = pw;
+    session.user.properties = [];
 
     app.get('db').register_user(username, pw).then(
         houser_user => {
-            res.status(200).send(houser_user);
+            res.status(200).send(session.user);
         }
     )
 })
 
-app.get('/api/getproperties', (req, res, next) => {
-        const {username, pw} = req.query;
+// app.get('/api/getuser', checkForSession, (req, res, next) => {
+    
+//     const {session} = req;
+//     // console.log(session.user, "endpoint getuser")
+    
+//     // session.user.username = session.user.username;
+//     // session.user.pw = session.user.pw;
+//     // session.user.properties = [];
 
+//     res.status(200).send(session.user)
+    
+// })
+
+app.get('/api/getproperties', (req, res, next) => {
+
+        const {username, pw} = req.query;
+        const {session} = req;
+
+        
+        console.log(session.user, "getproperties endpoint")
+        
         app.get('db').get_user_props(username, pw).then(
             houser => {
+
+                // session.user.username = username;
+                // session.user.pw = pw;
+                // session.user.properties = houser;
                 
                 res.status(200).send(houser);
-                session.user.properties = houser;
             }
         )
     }
 )
-
-
-
 
 app.post('/api/create', (req, res, next) => {
 
@@ -94,26 +119,26 @@ app.post('/api/create', (req, res, next) => {
             res.status(200).send(houser)
         }
     )
-});
+    console.log("hit create endpoint in server")
 
+});
 
 app.delete('/api/delete', (req, res, next) => {
     const {id, username, pw} = req.query;
+    const {session} = req;
 
     app.get('db').delete_prop( id, username, pw ).then(
 
         houser_user => {
 
             if(houser_user){
-                // session.user.username = houser_user[0].username;
                 res.status(200).send(houser_user); 
             }else{
                 res.status(500);
             }  
         }
     )
-    
+    console.log("hit delete endpoint")
 })
-
 
 app.listen(SERVER_PORT, () => console.log(`listening on port: ${SERVER_PORT}`) )
