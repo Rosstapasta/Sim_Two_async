@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS houser_user
 (username varchar(80), pw varchar(80));
 
-
 CREATE TABLE IF NOT EXISTS houser
 (id serial primary key, username varchar(80), property_name varchar(80), 
 property_description varchar(160), address varchar(80), city varchar(80), 

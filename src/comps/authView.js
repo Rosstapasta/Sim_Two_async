@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import './comps.css';
 import houselogo from './auth_logo.png';
 import { connect } from 'react-redux';
-import { login, register, updateUserName, updatePassword } from '../ducks/reducer';
+import { login, register, updateUserName, updatePassword, getUser } from '../ducks/reducer';
 
 class AuthView extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
             username: '',
@@ -18,12 +18,15 @@ class AuthView extends Component{
         this.changePassword = this.changePassword.bind(this);
     }
 
+
+    componentWillMount(){
+        this.props.getUser()
+    }
+
     login(){
        const {history} = this.props;
-       const { username, pw } = this.state;
+       const { username, pw } = this.props;
        this.props.login({username, pw}, history);
-       
-       
     }
 
     register(){
@@ -50,9 +53,9 @@ class AuthView extends Component{
                     <img src={houselogo} alt="houselogo"/>
 
                     <p className="authtext">Username</p>
-                    <input className="avInput" onChange={(e) => this.handleChange("username", e.target.value)}/>
+                    <input className="avInput" value={this.props.username} onChange={(e) => this.handleChange("username", e.target.value)}/>
                     <p className="authtext">Password</p>
-                    <input className="avInput" onChange={(e) => this.changePassword(e.target.value)}/>
+                    <input className="avInput" type="password" value={this.props.pw} onChange={(e) => this.changePassword(e.target.value)}/>
 
                     <div className="abelement">
 
@@ -68,4 +71,4 @@ class AuthView extends Component{
     }
 }
 
-export default connect(state => state, { login, register, updateUserName, updatePassword })(AuthView)
+export default connect(state => state, { login, register, updateUserName, updatePassword, getUser })(AuthView)

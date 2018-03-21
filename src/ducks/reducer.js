@@ -21,6 +21,7 @@ const LOGIN = "LOGIN";
 const UPDATE_USERNAME = "UPDATE_USERNAME";
 const UPDATE_PASSWORD =  "UPDATE_PASSWORD";
 const REGISTER = 'REGISTER';
+const LOGOUT = "LOGOUT";
 
 const GETUSER = 'GETUSER';
 const GET_PROPS = 'GET_PROPS';
@@ -47,6 +48,9 @@ export default function reducer( state = initialState , action ) {
 
         case REGISTER + '_FULFILLED':
             return Object.assign({}, state );
+
+        case LOGOUT + '_FULFILLED':
+            return state;
 
         case GETUSER + '_FULFILLED':
             return Object.assign({}, state, { username: payload.username, pw: payload.pw } )
@@ -107,10 +111,20 @@ export function login( obj, history ){
     console.log(obj, "obj from login")
     return {
         type: LOGIN,
-        payload: axios.post( 'http://localhost:3030/api/login', obj ).then(res => { 
-            history.push('/dashview'); 
+        payload: axios.post( `/api/login`, obj ).then(res => { 
             console.log(res.data, "redux login")
+            history.push('/dashview'); 
             return res.data;
+        })
+    }
+}
+
+export function logOut(history){
+    console.log(history, "history")
+    return {
+        type: LOGOUT,
+        payload:  axios.post('/api/logout').then( res => {
+            history.push('/')
         })
     }
 }
@@ -118,7 +132,7 @@ export function login( obj, history ){
 export function getUser(){
     return {
         type: GETUSER,
-        payload: axios.get('http://localhost:3030/api/getuser').then(res => {
+        payload: axios.get('/api/getuser').then(res => {
            
             return res.data;
         })
@@ -128,7 +142,7 @@ export function getUser(){
 export function getProps(username, pw){
     return {
         type: GET_PROPS,
-        payload: axios.get( `http://localhost:3030/api/getproperties?username=${username}&pw=${pw}`).then( res => {
+        payload: axios.get( `/api/getproperties?username=${username}&pw=${pw}`).then( res => {
             return res.data;
         })
     }
@@ -137,7 +151,7 @@ export function getProps(username, pw){
 export function sendNewProp(prop, history){
      return {
          type: SEND_NEWPROP,
-         payload: axios.post('http://localhost:3030/api/create', prop ).then(res => {
+         payload: axios.post('/api/create', prop ).then(res => {
              if(res.data[0]){
              history.push('/dashview')
              }else{
@@ -148,11 +162,11 @@ export function sendNewProp(prop, history){
     }                                   
 }
 
-export function deleteProp( prop, prop2, prop3){
+export function deleteProp( prop ){
     console.log(prop, "from redux deleteprop")
     return{
         type: DELETE_PROP,
-        payload: axios.delete(`http://localhost:3030/api/delete?id=${prop}&username=${prop2}&pw=${prop3}`).then(res => {
+        payload: axios.delete(`/api/delete?id=${prop}`).then(res => {
            
             return res.data;
         })
@@ -163,7 +177,7 @@ export function deleteProp( prop, prop2, prop3){
 export function register(obj, history){
     return{
         type: REGISTER,
-        payload: axios.post('http://localhost:3030/api/register', obj ).then( res => {
+        payload: axios.post('/api/register', obj ).then( res => {
             history.push('/dashview')
             return res.data
         })

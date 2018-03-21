@@ -9,12 +9,14 @@ import Wiz3 from './comps/wizSteps/wizThree';
 import Wiz4 from './comps/wizSteps/wizFour';
 import Wiz5 from './comps/wizSteps/wizFive';
 
+
 class App extends Component {
   render() {
     return (
       <div className="App">
           <Switch>
             <Route path='/' component={ AuthView } exact/>
+            
             <Route path='/dashview' component={ DashView }/>
             <Route path='/wiz1' component={ Wiz1 }/>
             <Route path='/wiz2' component={ Wiz2}/>

@@ -52,7 +52,7 @@ class DashView extends Component{
             return(
             <div key={i} className="propContainer">
             
-                <img className="deleteicon" src={deleteIcon} alt="deleteIcon" onClick={()=> this.props.deleteProp(prop.id, this.props.username, this.props.pw)}/>
+                <img className="deleteicon" src={deleteIcon} alt="deleteIcon" onClick={()=> this.props.deleteProp(prop.id)}/>
 
                 <div className="propImgCon">
                     <img className="imageDisplay" src={`${prop.imgurl}`} alt="loading"/>
@@ -66,7 +66,6 @@ class DashView extends Component{
                 </div>
 
                 <div className="propItems">
-                
                 
                     <p>Loan: ${prop.loan}</p>
                     <p>Monthly Mortgage: ${prop.monthly_mort}</p>

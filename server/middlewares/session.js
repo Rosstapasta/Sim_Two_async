@@ -5,8 +5,6 @@ module.exports = function(req, res, next){
         session.user = {
             username: '',
             pw: '',
-            properties: []
-
         }
     }
     console.log(session.id, "session middleware")

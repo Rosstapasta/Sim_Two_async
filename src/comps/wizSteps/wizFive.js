@@ -15,9 +15,9 @@ class Wiz5 extends Component{
 
     sendProperty(){
 
-        const { username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage, history } = this.props;
+        const {propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage, history } = this.props;
 
-        this.props.sendNewProp({username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage}, history )
+        this.props.sendNewProp({propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage}, history )
     }
     
 
@@ -67,11 +67,10 @@ class Wiz5 extends Component{
 
 function mapStateToProps(state){
     const { 
-        username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage 
+        propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage 
     } = state;
 
     return{
-        username,
         propertyName,
         propertyDescription,
         address,

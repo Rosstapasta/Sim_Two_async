@@ -14,44 +14,36 @@ const {
     SESSION_SECRET,
 } = process.env;
 
+massive(CONNECTION_STRING).then(db => {
+    app.set('db', db);
+});
+
 app.use( bodyParser.json() );
 app.use( cors() );
 
 app.use( session({ 
     secret: SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false
   }));
 
-massive(CONNECTION_STRING).then(db => {
-    app.set('db', db);
-});
 
-app.post('/api/login', (req, res, next) => 
+app.post('/api/login', checkForSession, (req, res, next) => 
     {
         const {session} = req;
         const {username, pw} = req.body;
 
-        session.user = {
-            username: '',
-            pw: '',
-            properties: []
-
-        }
+    console.log(req.body, "req.body");
 
         app.get('db').login_user(username, pw).then( 
             
             houser_user => {
-                    console.log(houser_user);
                 if(houser_user[0]){
 
                     session.user.username = username;
                     session.user.pw = pw;
-                    session.user.properties = [];
                     
                     res.status(200).send(session.user)
-                    console.log(session.user, "login endpoint");
-
                 }else{
 
                 res.status(500)
@@ -60,14 +52,12 @@ app.post('/api/login', (req, res, next) =>
     }
 );
 
-app.post('/api/register',  (req, res, next) => {
+app.post('/api/register', checkForSession, (req, res, next) => {
 
     const {session} = req;
     const {username, pw} = req.body;
-
     session.user.username = username;
     session.user.pw = pw;
-    session.user.properties = [];
 
     app.get('db').register_user(username, pw).then(
         houser_user => {
@@ -76,34 +66,17 @@ app.post('/api/register',  (req, res, next) => {
     )
 })
 
-// app.get('/api/getuser', checkForSession, (req, res, next) => {
+app.get('/api/getuser', checkForSession, (req, res, next) => {
     
-//     const {session} = req;
-//     // console.log(session.user, "endpoint getuser")
-    
-//     // session.user.username = session.user.username;
-//     // session.user.pw = session.user.pw;
-//     // session.user.properties = [];
-
-//     res.status(200).send(session.user)
-    
-// })
+    const {session} = req;
+    res.status(200).send(session.user)
+})
 
 app.get('/api/getproperties', (req, res, next) => {
-
-        const {username, pw} = req.query;
+    
         const {session} = req;
-
-        
-        console.log(session.user, "getproperties endpoint")
-        
-        app.get('db').get_user_props(username, pw).then(
+        app.get('db').get_user_props(session.user.username, session.user.pw).then(
             houser => {
-
-                // session.user.username = username;
-                // session.user.pw = pw;
-                // session.user.properties = houser;
-                
                 res.status(200).send(houser);
             }
         )
@@ -112,25 +85,23 @@ app.get('/api/getproperties', (req, res, next) => {
 
 app.post('/api/create', (req, res, next) => {
 
-    const { username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage } = req.body;
+    const { propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, recommendRent, desiredRent, monthlyMortgage } = req.body;
+    const {session} = req;
 
-    app.get('db').new_property(username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, monthlyMortgage, recommendRent, desiredRent).then( 
+    app.get('db').new_property(session.user.username, propertyName, propertyDescription, address, city, stateUSA, zip, imgurl, loan, monthlyMortgage, recommendRent, desiredRent).then( 
         houser => {
             res.status(200).send(houser)
         }
     )
-    console.log("hit create endpoint in server")
-
 });
 
 app.delete('/api/delete', (req, res, next) => {
-    const {id, username, pw} = req.query;
+    const {id } = req.query;
     const {session} = req;
 
-    app.get('db').delete_prop( id, username, pw ).then(
+    app.get('db').delete_prop( id, session.user.username, session.user.pw ).then(
 
         houser_user => {
-
             if(houser_user){
                 res.status(200).send(houser_user); 
             }else{
@@ -138,7 +109,12 @@ app.delete('/api/delete', (req, res, next) => {
             }  
         }
     )
-    console.log("hit delete endpoint")
 })
+
+app.post('/api/logout', (req, res, next) => {
+    const { session } = req;
+    session.destroy();
+    res.status(200).send( req.session );
+},)
 
 app.listen(SERVER_PORT, () => console.log(`listening on port: ${SERVER_PORT}`) )
